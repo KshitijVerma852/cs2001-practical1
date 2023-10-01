@@ -2,6 +2,8 @@ package impl;
 
 import interfaces.ITransition;
 
+import java.util.Objects;
+
 /**
  * Class representing a single transition for an FSM, equivalent to a row in a transition table.
  */
@@ -37,5 +39,4 @@ public class Transition implements ITransition {
     public int getNextState() {
         return nextState;
     }
-
 }

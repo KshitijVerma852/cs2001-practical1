@@ -1,13 +1,17 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import exceptions.BadInputException;
+import exceptions.NDTransitionException;
+import impl.Factory;
+import impl.Transition;
+import interfaces.IFactory;
+import interfaces.ITransition;
+import interfaces.ITransitionTable;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import impl.Factory;
-import interfaces.IFactory;
-import interfaces.ITransitionTable;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * This is a JUnit test class for the FSM ADT.
@@ -37,6 +41,38 @@ public class TestTransitionTable {
         assertNotNull(transitionTable);
     }
 
-    /* ... and many more tests of your own below here to test the ADT ... */
+    @Test
+    void addsTransitionSuccessfully() throws NDTransitionException, BadInputException {
+        ITransition tt = new Transition(1, 'z', 'a', 2);
+        transitionTable.addTransition(tt);
+
+        ITransition t = transitionTable.getTransition(1, 'z');
+
+        Assertions.assertTrue(tt.getCurrentState() == t.getCurrentState()
+                && tt.getInput() == t.getInput()
+                && tt.getOutput() == t.getOutput()
+                && tt.getNextState() == t.getNextState());
+    }
+
+    //TODO - add test to add multiple transtions
+
+    //TODO - add test for BadInputException
+    // getTransition MUST throw BadInputException when combination current_state, char input does not exist in transitions list
+    @Test
+    void throwsNDTransitionExceptionWhenDuplicateStateAndInputAreProvided() throws NDTransitionException, BadInputException {
+        ITransition tt = new Transition(1, 'z', 'a', 2);
+        transitionTable.addTransition(tt);
+        Assertions.assertThrows(NDTransitionException.class, () -> transitionTable.addTransition(tt));
+    }
+
+    @Test
+    void checksIfAnyTransitionHasMissingInputs() {
+        // TODO - @Kshitij
+    }
+
+    @Test
+    void checksIfTransitionRoutesToIllegalStates() {
+
+    }
 
 }

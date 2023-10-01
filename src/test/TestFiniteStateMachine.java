@@ -20,7 +20,6 @@ import interfaces.ITransition;
  */
 public class TestFiniteStateMachine {
 
-
     private static final int STATE1 = 1;
 
     private static final char INPUT1 = 'a';
@@ -57,7 +56,6 @@ public class TestFiniteStateMachine {
      */
     @Test
     public void singleStateFSMWorks() throws BadTableException, BadInputException, NDTransitionException {
-//        ITransition t1 = factory.makeTransition(STATE1, INPUT1, OUTPUT1, STATE1);
         ITransition t1 = factory.makeTransition(1, 'a', 'e', 1);
         fsm.addTransition(t1);
         assertEquals("eee", fsm.interpret("aaa"));

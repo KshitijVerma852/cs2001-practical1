@@ -6,34 +6,34 @@ import exceptions.NDTransitionException;
 import interfaces.IFiniteStateMachine;
 import interfaces.ITransition;
 
+import java.util.List;
+
 /**
  * Class representing a finite state machine.
  */
 public class FiniteStateMachine implements IFiniteStateMachine {
-    ITransition[] fsm = new Transition[10];
-    int currIndex = 0;
+
+    TransitionTable transitionTable = new TransitionTable();
 
     @Override
     public void addTransition(ITransition transition) throws NDTransitionException {
-        fsm[currIndex] = transition;
-        currIndex++;
-        // TODO: Not sure about length 5 of the array.
-        // TODO: Check the length of array before adding new values.
+        transitionTable.addTransition(transition);
     }
 
+    // TODO - Add test for BadTableException
+    // TODO - Add test for BadInputException
     @Override
     public String interpret(String input) throws BadTableException, BadInputException {
-        // aaa -> 'a' 'a' 'a'
         StringBuilder outputs = new StringBuilder();
         if (input != null && !input.isEmpty()) {
-            int t2 = 0;
             char[] inputs = input.toCharArray();
+            List<ITransition> transitions = transitionTable.getTransitions();
             int currIndex = 0;
             for (char c : inputs) {
-                for (int i = currIndex; i < fsm.length + currIndex; i++) {
-                    ITransition iTransition = fsm[currIndex];
+                for (int i = currIndex; i < transitions.size() + currIndex; i++) {
+                    ITransition iTransition = transitions.get(i);
                     currIndex++;
-                    if (currIndex == fsm.length - 1) {
+                    if (currIndex == transitions.size()) {
                         currIndex = 0;
                     }
                     if (iTransition != null && iTransition.getInput() == c) {
@@ -43,7 +43,6 @@ public class FiniteStateMachine implements IFiniteStateMachine {
                 }
             }
         }
-        System.out.println("outputs = " + outputs);
         return outputs.toString();
     }
 }
