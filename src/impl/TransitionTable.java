@@ -37,9 +37,19 @@ public class TransitionTable implements ITransitionTable {
 
     }
 
+    /**
+     * @return true if the transition table contains transitions to illegal (non-existent) state (i.e. next_states that are not in the table as a current_state) and false otherwise
+     */
     @Override
     public boolean hasTransitionsToIllegalStates() {
-        // TODO Auto-generated method stub
+        for (int i = 0; i < transitions.size(); i++) {
+            int target = transitions.get(i).getNextState();
+            Optional<Integer> isPresentInCurrState = transitions.stream().map(x -> x.getCurrentState()).filter(x -> x == target).findAny();
+            if (!isPresentInCurrState.isPresent()) {
+                return true;
+            }
+
+        }
         return false;
     }
 

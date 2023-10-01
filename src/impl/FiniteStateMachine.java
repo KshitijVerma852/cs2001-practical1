@@ -20,29 +20,38 @@ public class FiniteStateMachine implements IFiniteStateMachine {
         transitionTable.addTransition(transition);
     }
 
-    // TODO - Add test for BadTableException
-    // TODO - Add test for BadInputException
+    // TODO - Add test for BadTableException when hasTransitionsToIllegalStates is TRUE
+    // TODO - Add test for BadInputException WHEN input is NULL or empty
     @Override
     public String interpret(String input) throws BadTableException, BadInputException {
+        if (input == null || input.contains(" ")) {
+            throw new BadInputException();
+            // TODO @Kshitj - write test case for this
+            // Input = null
+            // Input contains " "
+
+        }
+        if (transitionTable.hasTransitionsToIllegalStates()) {
+            throw new BadTableException();
+        }
         StringBuilder outputs = new StringBuilder();
-        if (input != null && !input.isEmpty()) {
-            char[] inputs = input.toCharArray();
-            List<ITransition> transitions = transitionTable.getTransitions();
-            int currIndex = 0;
-            for (char c : inputs) {
-                for (int i = currIndex; i < transitions.size() + currIndex; i++) {
-                    ITransition iTransition = transitions.get(i);
-                    currIndex++;
-                    if (currIndex == transitions.size()) {
-                        currIndex = 0;
-                    }
-                    if (iTransition != null && iTransition.getInput() == c) {
-                        outputs.append(iTransition.getOutput());
-                        break;
-                    }
+        char[] inputs = input.toCharArray();
+        List<ITransition> transitions = transitionTable.getTransitions();
+        int currIndex = 0;
+        for (char c : inputs) {
+            for (int i = currIndex; i < transitions.size() + currIndex; i++) {
+                ITransition iTransition = transitions.get(i);
+                currIndex++;
+                if (currIndex == transitions.size()) {
+                    currIndex = 0;
+                }
+                if (iTransition != null && iTransition.getInput() == c) {
+                    outputs.append(iTransition.getOutput());
+                    break;
                 }
             }
         }
+
         return outputs.toString();
     }
 }

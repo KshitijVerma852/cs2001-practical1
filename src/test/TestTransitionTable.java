@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class TestTransitionTable {
 
-
     private IFactory factory;
     private ITransitionTable transitionTable;
 
@@ -71,8 +70,29 @@ public class TestTransitionTable {
     }
 
     @Test
-    void checksIfTransitionRoutesToIllegalStates() {
+    void returnsTrueWhenTransitionRoutesToIllegalStates() throws NDTransitionException {
+        ITransition t1 = new Transition(1, 'z', 'a', 2);
+        ITransition t2 = new Transition(2, 'z', 'a', 3);
+        ITransition t3 = new Transition(3, 'z', 'a', 100);
 
+        transitionTable.addTransition(t1);
+        transitionTable.addTransition(t2);
+        transitionTable.addTransition(t3);
+
+        Assertions.assertTrue(transitionTable.hasTransitionsToIllegalStates());
+    }
+
+    @Test
+    void returnsFalseWhenTransitionDoesNotRoutesToIllegalStates() throws NDTransitionException {
+        ITransition t1 = new Transition(1, 'z', 'a', 2);
+        ITransition t2 = new Transition(2, 'z', 'a', 3);
+        ITransition t3 = new Transition(3, 'z', 'a', 1);
+
+        transitionTable.addTransition(t1);
+        transitionTable.addTransition(t2);
+        transitionTable.addTransition(t3);
+
+        Assertions.assertFalse(transitionTable.hasTransitionsToIllegalStates());
     }
 
 }
