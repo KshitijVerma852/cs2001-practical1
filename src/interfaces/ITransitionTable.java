@@ -37,5 +37,4 @@ public interface ITransitionTable {
      * @return true if the table is missing one or more transitions from states for valid inputs and false otherwise.
      */
     boolean hasMissingInputs();
-
 }

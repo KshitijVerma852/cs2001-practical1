@@ -84,7 +84,7 @@ public class TestFiniteStateMachine {
      * @throws NDTransitionException should not be thrown during this test
      */
     @Test
-    public void simplThreeStateFSMWorks() throws BadTableException, BadInputException, NDTransitionException {
+    public void simpleThreeStateFSMWorks() throws BadTableException, BadInputException, NDTransitionException {
         fsm.addTransition(factory.makeTransition(7, '1', '1', 5));
         fsm.addTransition(factory.makeTransition(7, '2', '0', 7));
         fsm.addTransition(factory.makeTransition(5, '1', '2', 6));

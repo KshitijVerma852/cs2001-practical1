@@ -66,6 +66,7 @@ public class TestTransitionTable {
 
     @Test
     void checksIfAnyTransitionHasMissingInputs() {
+        // transitionTable -> 1, 'z'
         // TODO - @Kshitij
     }
 

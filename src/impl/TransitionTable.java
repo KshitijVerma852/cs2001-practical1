@@ -8,6 +8,7 @@ import interfaces.ITransitionTable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Class representing a transition table for an FSM.
@@ -55,10 +56,10 @@ public class TransitionTable implements ITransitionTable {
 
     @Override
     public boolean hasMissingInputs() {
-        // TODO Auto-generated method stub
-        return false;
+        // TODO - check what's the ask?
+        List<ITransition> missingInputs = transitions.stream().filter(x -> x.getInput() == ' ').toList();
+        return missingInputs.isEmpty();
     }
-
 
     public List<ITransition> getTransitions() {
         return transitions;

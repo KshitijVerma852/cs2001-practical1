@@ -51,7 +51,6 @@ public class FiniteStateMachine implements IFiniteStateMachine {
                 }
             }
         }
-
         return outputs.toString();
     }
 }
